@@ -1,4 +1,6 @@
-import { AST, SupportLanguage, Parser, Printer } from 'prettier'
+import { SupportLanguage, Parser, Printer } from 'prettier'
+import { Tree } from 'tree-sitter'
+import { parser } from './parser'
 import { printAwk } from './printer'
 
 type ParserName = string
@@ -14,9 +16,7 @@ export const languages: SupportLanguage[] = [
 
 export const parsers: Record<ParserName, Parser> = {
   'awk-parse': {
-    parse: (text: string): AST => ({
-      text,
-    }),
+    parse: (text: string): Tree => parser.parse(text),
     astFormat: 'awk-format',
     locStart: () => 0,
     locEnd: () => 0,
