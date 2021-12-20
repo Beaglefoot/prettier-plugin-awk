@@ -19,6 +19,23 @@
         "type": "npm",
         "script": "compile"
       }
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Test run",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/out/test_run.js",
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ],
+      "envFile": "${workspaceFolder}/.env",
+      "preLaunchTask": {
+        "type": "npm",
+        "script": "compile"
+      }
     }
   ]
 }

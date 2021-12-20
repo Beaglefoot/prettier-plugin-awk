@@ -1,5 +1,5 @@
 import { SupportLanguage, Parser, Printer } from 'prettier'
-import { Tree } from 'tree-sitter'
+import { SyntaxNode } from 'tree-sitter'
 import { parser } from './parser'
 import { printAwk } from './printer'
 
@@ -16,10 +16,10 @@ export const languages: SupportLanguage[] = [
 
 export const parsers: Record<ParserName, Parser> = {
   'awk-parse': {
-    parse: (text: string): Tree => parser.parse(text),
+    parse: (text: string): SyntaxNode => parser.parse(text).rootNode,
     astFormat: 'awk-format',
-    locStart: () => 0,
-    locEnd: () => 0,
+    locStart: () => -1,
+    locEnd: () => -1,
   },
 }
 

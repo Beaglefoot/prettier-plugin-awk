@@ -2,5 +2,7 @@ out
 node_modules
 .vscode-test
 temp
+temp.awk
 *.log
 *.tsbuildinfo
+.env
