@@ -1,4 +1,4 @@
-import { SupportLanguage, Parser, Printer } from 'prettier'
+import { SupportLanguage, Parser, Printer, Options } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 import { parser } from './parser'
 import { printAwk } from './printer'
@@ -27,4 +27,8 @@ export const printers: Record<PrinterName, Printer> = {
   'awk-format': {
     print: printAwk,
   },
+}
+
+export const defaultOptions: Options = {
+  tabWidth: 4,
 }
