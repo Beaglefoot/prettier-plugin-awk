@@ -1,9 +1,10 @@
 import { Printer, doc } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
+import { handleBlock } from './block'
 
 const { hardline, indent, join } = doc.builders
 
-export const printAwk: Printer<SyntaxNode>['print'] = (path, _options, print) => {
+export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
   const node = path.getValue()
 
   if (node === null) return ''
@@ -19,16 +20,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, _options, print) =>
       return [node.text, ' ', path.call(print, 'nextSibling')]
 
     case 'block':
-      if (node.children.filter((node) => node.isNamed).length === 1) {
-        return ['{ ', path.call(print, 'firstNamedChild'), ' }']
-      }
-
-      return [
-        '{',
-        indent([hardline, join(hardline, path.map(print, 'namedChildren'))]),
-        hardline,
-        '}',
-      ]
+      return handleBlock(path, options, print)
 
     case 'binary_exp':
     case 'assignment_exp':

@@ -1,7 +1,7 @@
 import { SupportLanguage, Parser, Printer, Options } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 import { parser } from './parser'
-import { printAwk } from './printer'
+import { printAwk } from './printer/printer'
 
 type ParserName = string
 type PrinterName = string
