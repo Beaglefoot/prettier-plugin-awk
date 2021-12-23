@@ -12,7 +12,9 @@
   "main": "./out/index.js",
   "scripts": {
     "compile": "tsc -b",
-    "format": "yarn compile && prettier --plugin ."
+    "compile:watch": "tsc -b -w",
+    "format": "yarn compile && prettier --plugin .",
+    "format:watch": "find out/ | entr -c -r yarn prettier --plugin ."
   },
   "dependencies": {
     "prettier": "2.5.1",

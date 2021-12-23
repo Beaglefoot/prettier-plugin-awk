@@ -3,7 +3,7 @@ import { SyntaxNode } from 'tree-sitter'
 
 const { hardline, indent, join } = doc.builders
 
-export const handleBlock: Printer<SyntaxNode>['print'] = (path, _options, print) => {
+export const formatBlock: Printer<SyntaxNode>['print'] = (path, _options, print) => {
   const node = path.getValue()
 
   const statements_count = node.children.filter((node) => node.isNamed).length

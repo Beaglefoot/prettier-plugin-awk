@@ -1,8 +1,9 @@
 import { Printer, doc } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
-import { handleBlock } from './block'
+import { formatBlock } from './block'
+import { formatFunctionDefinition } from './func_def'
 
-const { hardline, indent, join } = doc.builders
+const { hardline, join } = doc.builders
 
 export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
   const node = path.getValue()
@@ -11,16 +12,22 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
 
   switch (node.type) {
     case 'program':
-      return join([hardline, hardline], path.map(print, 'children'))
+      return join(hardline, path.map(print, 'children'))
+
+    case 'directive':
+      return [node.firstChild!.text, ' ', node.lastChild!.text]
+
+    case 'func_def':
+      return formatFunctionDefinition(path, options, print)
 
     case 'rule':
-      return path.call(print, 'firstChild')
+      return [node.previousSibling ? hardline : '', path.call(print, 'firstChild')]
 
     case 'pattern':
       return [node.text, ' ', path.call(print, 'nextSibling')]
 
     case 'block':
-      return handleBlock(path, options, print)
+      return formatBlock(path, options, print)
 
     case 'binary_exp':
     case 'assignment_exp':
@@ -36,9 +43,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'identifier':
     case 'number':
     case 'string':
-      return node.text
-
     default:
-      return ''
+      return node.text
   }
 }
