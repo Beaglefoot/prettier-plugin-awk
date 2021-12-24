@@ -1,7 +1,7 @@
 import { doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 
-const { hardline } = doc.builders
+const { hardline, join, indent } = doc.builders
 
 interface FunctionParams {
   params: string[]
@@ -23,24 +23,53 @@ function parseParams(paramsText: string): FunctionParams {
   return result
 }
 
+function formatParamsHorizontally(paramList: SyntaxNode): doc.builders.Doc[] {
+  const initialParamsText = paramList?.text || ''
+  const allParams = parseParams(initialParamsText)
+
+  return [
+    '(',
+    allParams.params.join(', '),
+    allParams.localVars.length ? ',   ' : '',
+    allParams.localVars.join(', '),
+    ')',
+  ]
+}
+
+function formatParamsVertically(paramList: SyntaxNode): doc.builders.Doc[] {
+  return [
+    '(\\',
+    indent([
+      hardline,
+      join(
+        [',', hardline],
+        paramList.namedChildren.map((c) => c.text),
+      ),
+      '\\',
+    ]),
+    hardline,
+    ')',
+  ]
+}
+
 export const formatFunctionDefinition: Printer<SyntaxNode>['print'] = (
   path,
   _options,
   print,
 ) => {
   const node = path.getValue()
-  const initialParamsText = node.descendantsOfType('param_list')[0]?.text || ''
-  const allParams = parseParams(initialParamsText)
+  const paramList = node.descendantsOfType('param_list')[0]
+
+  const formattedParams = paramList?.text.includes('\n')
+    ? formatParamsVertically(paramList)
+    : formatParamsHorizontally(paramList)
 
   return [
     node.previousSibling ? hardline : '',
     'function ',
     node.descendantsOfType('identifier')[0].text,
-    '(',
-    allParams.params.join(', '),
-    allParams.localVars.length ? ',   ' : '',
-    allParams.localVars.join(', '),
-    ') ',
+    ...formattedParams,
+    ' ',
     path.call(print, 'lastChild'),
   ]
 }

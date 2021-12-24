@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`definition.awk 1`] = `
+function a(p1,p2,   p3) {
+  print
+}
+
+function b(a) {}
+function c() {}
+function d(a, b,
+  ####
+  c) {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function a(p1, p2,   p3) { print }
+
+function b(a) {}
+
+function c() {}
+
+function d(\\
+    a,
+    b,
+    ####,
+    c\\
+) {}
+`;
