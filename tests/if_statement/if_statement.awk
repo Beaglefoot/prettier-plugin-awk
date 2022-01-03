@@ -1,0 +1,12 @@
+{
+  if (0);
+    else print "hi"
+  if (1) {
+    print "bye"
+  } else     x = 42 
+    if (x == 9)
+      abc = very_very_very_very_very_very_long_variable + another_very_very_very_long_variable
+    else if (x == 5)
+      continue;
+    else x = 42
+}
