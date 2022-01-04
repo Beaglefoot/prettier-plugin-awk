@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`for_in_statement.awk 1`] = `
+{
+  for (  x in arr  ) {
+    print arr[x]
+  }
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{
+    for (x in arr) { print arr[x] }
+}
+
+`;

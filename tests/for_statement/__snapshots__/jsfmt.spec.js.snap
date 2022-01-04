@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`for_statement.awk 1`] = `
+{
+  for (x = 1;x <= 12;x++) {
+    print $x
+  }
+  for (x = 1;x <= 12;x++) print $x
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{
+    for (x = 1; x <= 12; x++) { print $x }
+
+    for (x = 1; x <= 12; x++) print $x
+}
+
+`;
