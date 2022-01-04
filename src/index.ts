@@ -2,6 +2,7 @@ import { SupportLanguage, Parser, Printer, Options } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 import { parser } from './parser'
 import { printAwk } from './printer/printer'
+import { withStatementSeparator } from './printer/statement'
 
 type ParserName = string
 type PrinterName = string
@@ -25,7 +26,7 @@ export const parsers: Record<ParserName, Parser> = {
 
 export const printers: Record<PrinterName, Printer> = {
   'awk-format': {
-    print: printAwk,
+    print: withStatementSeparator(printAwk),
   },
 }
 

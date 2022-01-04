@@ -11,10 +11,6 @@ export const formatIfStatement: Printer<SyntaxNode>['print'] = (
   const node = path.getValue()
   const result: Doc[] = []
 
-  if (node.previousNamedSibling) {
-    result.push(hardline)
-  }
-
   result.push('if (', node.firstNamedChild!.text, ')')
 
   switch (node.children[4].type) {

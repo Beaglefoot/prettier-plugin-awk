@@ -45,6 +45,16 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         path.call(print, 'lastNamedChild'),
       ]
 
+    case 'for_in_statement':
+      return [
+        'for (',
+        node.namedChildren[0].text,
+        ' in ',
+        node.namedChildren[1].text,
+        ') ',
+        path.call(print, 'lastNamedChild'),
+      ]
+
     case 'if_statement':
       return formatIfStatement(path, options, print)
 
@@ -58,8 +68,10 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         path.call(print, 'lastChild'),
       ]
 
-    case 'func_call':
     case 'identifier':
+    case 'func_call':
+    case 'print_statement':
+    case 'printf_statement':
     case 'number':
     case 'string':
     default:
