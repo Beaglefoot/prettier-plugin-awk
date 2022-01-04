@@ -13,6 +13,7 @@ export const separatedStatements = new Set([
   'switch_statement',
 ])
 
+/** Adds an empty line before and after some statements */
 export function withStatementSeparator(
   printFn: Printer<SyntaxNode>['print'],
 ): Printer<SyntaxNode>['print'] {
@@ -28,6 +29,38 @@ export function withStatementSeparator(
           ? hardline
           : '',
       ]
+    }
+
+    return result
+  }
+}
+
+/**
+ * Preserves existing empty lines in original source code.
+ * Multiple empty lines get replaced with a single one.
+ */
+export function withPreservedEmptyLines(
+  printFn: Printer<SyntaxNode>['print'],
+): Printer<SyntaxNode>['print'] {
+  const nodeTypesToExclude = new Set(['rule', 'block', 'func_def'])
+
+  return function (path, options, print) {
+    const node = path.getValue()
+    const result = printFn(path, options, print)
+
+    if (nodeTypesToExclude.has(node.type)) return result
+
+    if (
+      !separatedStatements.has(node.type) &&
+      node.previousNamedSibling &&
+      !separatedStatements.has(node.previousNamedSibling.type)
+    ) {
+      const currentLine = node.startPosition.row
+      const previousLine = node.previousNamedSibling.endPosition.row
+
+      if (currentLine - previousLine > 1) {
+        return [hardline, result]
+      }
     }
 
     return result
