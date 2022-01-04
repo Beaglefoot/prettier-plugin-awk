@@ -4,7 +4,7 @@ import { formatBlock } from './block'
 import { formatFunctionDefinition } from './func_def'
 import { formatIfStatement } from './if_statement'
 
-const { hardline, join } = doc.builders
+const { hardline, join, group, indent, line } = doc.builders
 
 export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
   const node = path.getValue()
@@ -53,6 +53,24 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         node.namedChildren[1].text,
         ') ',
         path.call(print, 'lastNamedChild'),
+      ]
+
+    case 'while_statement':
+      return [
+        'while (',
+        node.firstNamedChild!.text,
+        ') ',
+        path.call(print, 'lastNamedChild'),
+      ]
+
+    case 'do_while_statement':
+      return [
+        'do ',
+        path.call(print, 'firstNamedChild'),
+        hardline,
+        'while (',
+        node.lastNamedChild!.text,
+        ')',
       ]
 
     case 'if_statement':
