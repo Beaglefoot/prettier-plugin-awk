@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`block.awk 1`] = `
+{
+a = 1
+}
+
+{ for (i = 1; i <= 2; i++) {
+}}
+
+{if (1);
+  else print "hi"
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{ a = 1 }
+
+{
+    for (i = 1; i <= 2; i++) {}
+}
+
+{
+    if (1);
+    else print "hi"
+}
+
+`;
