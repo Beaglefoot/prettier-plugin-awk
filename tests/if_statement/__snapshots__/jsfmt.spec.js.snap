@@ -26,4 +26,5 @@ exports[`if_statement.awk 1`] = `
     else if (x == 5) continue
     else x = 42
 }
+
 `;

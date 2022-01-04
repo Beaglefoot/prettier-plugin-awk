@@ -16,7 +16,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
 
   switch (node.type) {
     case 'program':
-      return join(hardline, path.map(print, 'children'))
+      return [join(hardline, path.map(print, 'children')), hardline]
 
     case 'directive':
       return [node.firstChild!.text, ' ', node.lastChild!.text]
