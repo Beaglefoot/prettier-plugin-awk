@@ -4,7 +4,7 @@ import { formatBlock } from './block'
 import { formatFunctionDefinition } from './func_def'
 import { formatIfStatement } from './if_statement'
 
-const { hardline, join } = doc.builders
+const { hardline, join, indent } = doc.builders
 
 export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
   const node = path.getValue()
@@ -72,6 +72,33 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         path.call(print, 'lastNamedChild'),
         ')',
       ]
+
+    case 'switch_statement':
+      return [
+        'switch (',
+        path.call(print, 'firstNamedChild'),
+        ') ',
+        path.call(print, 'lastNamedChild'),
+      ]
+
+    case 'switch_body':
+      return [
+        '{',
+        indent([hardline, join(hardline, path.map(print, 'namedChildren'))]),
+        hardline,
+        '}',
+      ]
+
+    case 'switch_case':
+      return [
+        'case ',
+        path.call(print, 'children', 1),
+        ':',
+        node.children[3] ? indent([hardline, path.call(print, 'children', 3)]) : '',
+      ]
+
+    case 'switch_default':
+      return ['default:', indent([hardline, path.call(print, 'lastNamedChild')])]
 
     case 'if_statement':
       return formatIfStatement(path, options, print)

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`switch_statement.awk 1`] = `
+{
+      switch(x+1) {
+    case 1:
+      print "hi"
+      break
+    case 2:
+    default:
+      typeof(x);
+  }
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{
+    switch (x + 1) {
+        case 1:
+            print "hi"
+        case 2:
+        default:
+            typeof(x)
+    }
+}
+
+`;
