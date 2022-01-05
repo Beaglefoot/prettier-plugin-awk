@@ -11,7 +11,7 @@ export const formatIfStatement: Printer<SyntaxNode>['print'] = (
   const node = path.getValue()
   const result: Doc[] = []
 
-  result.push('if (', node.firstNamedChild!.text, ')')
+  result.push('if (', path.call(print, 'firstNamedChild'), ')')
 
   switch (node.children[4].type) {
     case ';':

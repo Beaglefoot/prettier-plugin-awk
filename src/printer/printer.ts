@@ -4,7 +4,7 @@ import { formatBlock } from './block'
 import { formatFunctionDefinition } from './func_def'
 import { formatIfStatement } from './if_statement'
 
-const { hardline, join, group, indent, line } = doc.builders
+const { hardline, join } = doc.builders
 
 export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
   const node = path.getValue()
@@ -36,11 +36,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'for_statement':
       return [
         'for (',
-        node.namedChildren[0].text,
+        path.call(print, 'namedChildren', 0),
         '; ',
-        node.namedChildren[1].text,
+        path.call(print, 'namedChildren', 1),
         '; ',
-        node.namedChildren[2].text,
+        path.call(print, 'namedChildren', 2),
         ') ',
         path.call(print, 'lastNamedChild'),
       ]
@@ -48,9 +48,9 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'for_in_statement':
       return [
         'for (',
-        node.namedChildren[0].text,
+        path.call(print, 'namedChildren', 0),
         ' in ',
-        node.namedChildren[1].text,
+        path.call(print, 'namedChildren', 1),
         ') ',
         path.call(print, 'lastNamedChild'),
       ]
@@ -58,7 +58,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'while_statement':
       return [
         'while (',
-        node.firstNamedChild!.text,
+        path.call(print, 'firstNamedChild'),
         ') ',
         path.call(print, 'lastNamedChild'),
       ]
@@ -69,7 +69,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         path.call(print, 'firstNamedChild'),
         hardline,
         'while (',
-        node.lastNamedChild!.text,
+        path.call(print, 'lastNamedChild'),
         ')',
       ]
 
@@ -81,7 +81,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return [
         path.call(print, 'firstChild'),
         ' ',
-        node.children[1].text,
+        path.call(print, 'children', 1),
         ' ',
         path.call(print, 'lastChild'),
       ]
