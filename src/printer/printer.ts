@@ -166,7 +166,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
 
     case 'array_ref':
     case 'grouping':
+    case 'string_concat':
       return path.map(print, 'children')
+
+    case 'concatenating_space':
+      return ' '
 
     case 'identifier':
     case 'func_call':
