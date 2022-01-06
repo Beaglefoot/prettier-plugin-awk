@@ -1,0 +1,8 @@
+{
+  getline
+  getline     line
+  getline<file
+  getline line<file
+  "cal"|getline   line
+  "cal"|&getline line
+}

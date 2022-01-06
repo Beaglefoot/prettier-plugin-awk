@@ -164,6 +164,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'exp_list':
       return join(', ', path.map(print, 'namedChildren'))
 
+    case 'getline_input':
+    case 'getline_file':
+    case 'piped_io_exp':
+      return join(' ', path.map(print, 'children'))
+
     case 'array_ref':
     case 'grouping':
     case 'string_concat':
