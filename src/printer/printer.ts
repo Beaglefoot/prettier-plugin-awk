@@ -103,6 +103,18 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'if_statement':
       return formatIfStatement(path, options, print)
 
+    case 'print_statement':
+      // No parentheses because 'print()' with no arguments is invalid statement
+      return node.firstNamedChild ? ['print ', path.map(print, 'namedChildren')] : 'print'
+
+    case 'printf_statement':
+      // With parentheses because 'printf' with no arguments is invalid statement
+      return [
+        'printf(',
+        node.firstNamedChild ? join(', ', path.map(print, 'namedChildren')) : '',
+        ')',
+      ]
+
     case 'binary_exp':
     case 'assignment_exp':
       return [
@@ -113,10 +125,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         path.call(print, 'lastChild'),
       ]
 
+    case 'exp_list':
+      return [join(', ', path.map(print, 'namedChildren'))]
+
     case 'identifier':
     case 'func_call':
-    case 'print_statement':
-    case 'printf_statement':
     case 'number':
     case 'string':
     default:
