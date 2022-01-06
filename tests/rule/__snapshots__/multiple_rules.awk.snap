@@ -1,6 +1,3 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`multiple_rules.awk 1`] = `
 BEGIN {
     a = 1
 }
@@ -22,5 +19,3 @@ END {
     b = 1
     c = a + 2
 }
-
-`;

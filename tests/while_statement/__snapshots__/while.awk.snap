@@ -1,6 +1,3 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`while.awk 1`] = `
 {
   while(x<2) {
     print 42  }
@@ -14,5 +11,3 @@ exports[`while.awk 1`] = `
     do print 42
     while (1)
 }
-
-`;
