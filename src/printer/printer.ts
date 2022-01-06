@@ -115,6 +115,15 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         ')',
       ]
 
+    case 'redirected_io_statement':
+      return [
+        path.call(print, 'children', 0),
+        ' ',
+        node.children[1].text,
+        ' ',
+        path.call(print, 'children', 2),
+      ]
+
     case 'binary_exp':
     case 'assignment_exp':
       return [

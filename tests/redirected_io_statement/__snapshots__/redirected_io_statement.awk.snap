@@ -1,0 +1,9 @@
+{
+    print "bad">"/dev/stderr"
+    printf("bad")>>"/dev/stderr"
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{
+    print "bad" > "/dev/stderr"
+    printf("bad") >> "/dev/stderr"
+}
