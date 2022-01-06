@@ -135,6 +135,15 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         path.call(print, 'lastChild'),
       ]
 
+    case 'ternary_exp':
+      return [
+        path.call(print, 'children', 0),
+        ' ? ',
+        path.call(print, 'children', 2),
+        ' : ',
+        path.call(print, 'children', 4),
+      ]
+
     case 'exp_list':
       return [join(', ', path.map(print, 'namedChildren'))]
 
