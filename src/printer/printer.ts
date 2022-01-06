@@ -165,6 +165,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return join(', ', path.map(print, 'namedChildren'))
 
     case 'array_ref':
+    case 'grouping':
       return path.map(print, 'children')
 
     case 'identifier':
