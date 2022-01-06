@@ -147,6 +147,9 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'unary_exp':
       return [path.call(print, 'firstChild'), path.call(print, 'lastNamedChild')]
 
+    case 'update_exp':
+      return [path.call(print, 'firstChild'), path.call(print, 'lastChild')]
+
     case 'exp_list':
       return [join(', ', path.map(print, 'namedChildren'))]
 
