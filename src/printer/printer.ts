@@ -147,8 +147,21 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'unary_exp':
       return [path.call(print, 'firstChild'), path.call(print, 'lastNamedChild')]
 
+    case 'field_ref':
+    case 'indirect_func_call':
     case 'update_exp':
       return [path.call(print, 'firstChild'), path.call(print, 'lastChild')]
+
+    case 'func_call':
+      return [
+        path.call(print, 'firstChild'),
+        '(',
+        node.children[2]!.type !== ')' ? path.call(print, 'children', 2) : '',
+        ')',
+      ]
+
+    case 'args':
+      return join(', ', path.map(print, 'namedChildren'))
 
     case 'exp_list':
       return [join(', ', path.map(print, 'namedChildren'))]
