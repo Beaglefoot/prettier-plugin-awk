@@ -161,10 +161,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       ]
 
     case 'args':
+    case 'exp_list':
       return join(', ', path.map(print, 'namedChildren'))
 
-    case 'exp_list':
-      return [join(', ', path.map(print, 'namedChildren'))]
+    case 'array_ref':
+      return path.map(print, 'children')
 
     case 'identifier':
     case 'func_call':
