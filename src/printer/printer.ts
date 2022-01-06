@@ -116,6 +116,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       ]
 
     case 'redirected_io_statement':
+    case 'piped_io_statement':
       return [
         path.call(print, 'children', 0),
         ' ',
