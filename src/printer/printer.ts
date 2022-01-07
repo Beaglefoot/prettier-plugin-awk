@@ -28,7 +28,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return [node.previousSibling ? hardline : '', path.call(print, 'firstChild')]
 
     case 'pattern':
-      return [node.text, ' ', path.call(print, 'nextSibling')]
+      return [path.call(print, 'firstChild'), ' ', path.call(print, 'nextSibling')]
 
     case 'block':
       return formatBlock(path, options, print)
@@ -133,6 +133,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
 
     case 'args':
     case 'exp_list':
+    case 'range_pattern':
       return join(', ', path.map(print, 'namedChildren'))
 
     case 'redirected_io_statement':
