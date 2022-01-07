@@ -131,6 +131,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         ')',
       ]
 
+    case 'grouping':
+      return node.firstNamedChild!.childCount >= 3
+        ? path.map(print, 'children')
+        : path.call(print, 'firstNamedChild')
+
     case 'args':
     case 'exp_list':
     case 'range_pattern':
@@ -144,10 +149,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'getline_input':
     case 'getline_file':
     case 'piped_io_exp':
+    case 'return_statement':
+    case 'exit_statement':
       return join(' ', path.map(print, 'children'))
 
     case 'array_ref':
-    case 'grouping':
     case 'string_concat':
       return path.map(print, 'children')
 
