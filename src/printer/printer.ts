@@ -115,35 +115,6 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         ')',
       ]
 
-    case 'redirected_io_statement':
-    case 'piped_io_statement':
-      return [
-        path.call(print, 'children', 0),
-        ' ',
-        node.children[1].text,
-        ' ',
-        path.call(print, 'children', 2),
-      ]
-
-    case 'binary_exp':
-    case 'assignment_exp':
-      return [
-        path.call(print, 'firstChild'),
-        ' ',
-        path.call(print, 'children', 1),
-        ' ',
-        path.call(print, 'lastChild'),
-      ]
-
-    case 'ternary_exp':
-      return [
-        path.call(print, 'children', 0),
-        ' ? ',
-        path.call(print, 'children', 2),
-        ' : ',
-        path.call(print, 'children', 4),
-      ]
-
     case 'unary_exp':
       return [path.call(print, 'firstChild'), path.call(print, 'lastNamedChild')]
 
@@ -164,6 +135,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'exp_list':
       return join(', ', path.map(print, 'namedChildren'))
 
+    case 'redirected_io_statement':
+    case 'piped_io_statement':
+    case 'binary_exp':
+    case 'assignment_exp':
+    case 'ternary_exp':
     case 'getline_input':
     case 'getline_file':
     case 'piped_io_exp':
