@@ -6,12 +6,20 @@ import { formatIfStatement } from './if_statement'
 
 const { hardline, join, indent } = doc.builders
 
+let nextNodeShouldBeIgnored = false
+
 export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
   const node = path.getValue()
 
   if (node === null) return ''
+
   if (node.hasError()) {
     throw new Error('Document has syntax error')
+  }
+
+  if (nextNodeShouldBeIgnored) {
+    nextNodeShouldBeIgnored = false
+    return node.text
   }
 
   switch (node.type) {
@@ -159,6 +167,13 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
 
     case 'concatenating_space':
       return ' '
+
+    case 'comment':
+      if (node.text.match(/#\s*prettier-ignore/)) {
+        nextNodeShouldBeIgnored = true
+      }
+
+      return node.text
 
     case 'identifier':
     case 'func_call':
