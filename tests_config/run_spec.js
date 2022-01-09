@@ -107,8 +107,9 @@ function getSnapshot(dirnameWithTest, filename) {
 
 function writeSnapshot(dirnameWithTest, filename, snapshotText) {
   const snapshotPath = getSnapshotPath(dirnameWithTest, filename)
+  const snapshotDir = path.dirname(snapshotPath)
 
-  if (!fs.existsSync('__snapshots__')) fs.mkdirSync('__snapshots__')
+  if (!fs.existsSync(snapshotDir)) fs.mkdirSync(snapshotDir)
 
   fs.writeFileSync(snapshotPath, snapshotText)
 
