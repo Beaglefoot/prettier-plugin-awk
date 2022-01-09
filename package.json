@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-awk",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Stanislav Chernov <ch-e-st@yandex.ru>",
   "license": "MIT",
   "keywords": [
