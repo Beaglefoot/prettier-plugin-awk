@@ -1,0 +1,15 @@
+.github/
+.vscode/
+build/
+tests/
+tests_config/
+node_modules/
+
+*.log
+*.tsbuildinfo
+
+temp
+temp.awk
+.mocharc.yml
+.env
+.prettierrc
