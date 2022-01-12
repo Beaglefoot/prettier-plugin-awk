@@ -24,7 +24,8 @@ export const formatIfStatement: Printer<SyntaxNode>['print'] = (
       result.push(group([indent([line, path.call(print, 'children', 4)])]))
   }
 
-  const elseClause = node.descendantsOfType('else_clause')[0]
+  const elseClause =
+    node.lastNamedChild!.type === 'else_clause' ? node.lastNamedChild : null
 
   if (elseClause) {
     result.push(hardline, 'else ', path.call(print, 'lastChild', 'lastChild'))

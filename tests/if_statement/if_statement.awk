@@ -9,4 +9,9 @@
     else if (x == 5)
       continue;
     else x = 42
+
+  if (1) {
+      if (1) {}
+      else {}
+  }
 }

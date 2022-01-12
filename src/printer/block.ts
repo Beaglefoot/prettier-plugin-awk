@@ -2,7 +2,7 @@ import { doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 import { separatedStatements } from './statement'
 
-const { hardline, indent, join } = doc.builders
+const { hardline, indent } = doc.builders
 
 function doesCommentBelongToNode(node: SyntaxNode): boolean {
   if (!node.previousNamedSibling || node.type !== 'comment') return false

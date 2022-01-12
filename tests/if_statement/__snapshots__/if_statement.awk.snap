@@ -9,6 +9,11 @@
     else if (x == 5)
       continue;
     else x = 42
+
+  if (1) {
+      if (1) {}
+      else {}
+  }
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 {
@@ -22,4 +27,9 @@
         abc = very_very_very_very_very_very_long_variable + another_very_very_very_long_variable
     else if (x == 5) continue
     else x = 42
+
+    if (1) {
+        if (1) {}
+        else {}
+    }
 }
