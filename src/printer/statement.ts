@@ -23,7 +23,9 @@ export function withStatementSeparator(
 
     if (separatedStatements.has(node.type)) {
       return [
-        node.previousNamedSibling ? hardline : '',
+        node.previousNamedSibling && node.previousNamedSibling.type !== 'comment'
+          ? hardline
+          : '',
         result,
         node.nextNamedSibling && !separatedStatements.has(node.nextNamedSibling.type)
           ? hardline

@@ -8,3 +8,11 @@ a = 1
 {if (1);
   else print "hi"
 }
+
+{
+    # comment
+    if (1) {}
+    # comment
+    # continued on newline
+    for (1;1;1) {}
+}
