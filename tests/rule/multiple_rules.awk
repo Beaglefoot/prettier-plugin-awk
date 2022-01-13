@@ -8,3 +8,5 @@ BEGIN {
 END {
     b = 1; c = a + 2
 }
+
+NR == 1

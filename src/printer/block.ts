@@ -1,6 +1,6 @@
 import { doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
-import { separatedStatements } from './statement'
+import { separatedStatements } from './wrappers'
 
 const { hardline, indent } = doc.builders
 

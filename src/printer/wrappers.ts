@@ -1,4 +1,4 @@
-import { doc, Printer } from 'prettier'
+import { AstPath, doc, ParserOptions, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 
 const { hardline } = doc.builders
@@ -65,6 +65,20 @@ export function withPreservedEmptyLines(
       }
     }
 
+    return result
+  }
+}
+
+/** This printer wrapper must be the outer one */
+export function withNullNodeHandler(
+  printFn: Printer<SyntaxNode>['print'],
+): Printer<SyntaxNode | null>['print'] {
+  return function (path, options, print) {
+    const node = path.getValue()
+
+    if (node === null) return ''
+
+    const result = printFn(path as AstPath<SyntaxNode>, options, print)
     return result
   }
 }
