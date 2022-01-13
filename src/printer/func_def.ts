@@ -65,7 +65,6 @@ export const formatFunctionDefinition: Printer<SyntaxNode>['print'] = (
     : formatParamsHorizontally(paramList)
 
   return [
-    node.previousSibling ? hardline : '',
     'function ',
     node.descendantsOfType('identifier')[0].text,
     ...formattedParams,

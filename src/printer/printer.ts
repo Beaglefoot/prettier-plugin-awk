@@ -31,7 +31,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return formatFunctionDefinition(path, options, print)
 
     case 'rule':
-      return [node.previousSibling ? hardline : '', path.call(print, 'firstChild')]
+      return path.call(print, 'firstChild')
 
     case 'pattern':
       return [path.call(print, 'firstChild'), ' ', path.call(print, 'nextSibling')]

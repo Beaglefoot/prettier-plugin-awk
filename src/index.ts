@@ -5,7 +5,7 @@ import { printAwk } from './printer/printer'
 import {
   withNullNodeHandler,
   withPreservedEmptyLines,
-  withStatementSeparator,
+  withNodesSeparator,
 } from './printer/wrappers'
 
 type ParserName = string
@@ -30,7 +30,7 @@ export const parsers: Record<ParserName, Parser> = {
 
 export const printers: Record<PrinterName, Printer> = {
   'awk-format': {
-    print: withNullNodeHandler(withPreservedEmptyLines(withStatementSeparator(printAwk))),
+    print: withNullNodeHandler(withPreservedEmptyLines(withNodesSeparator(printAwk))),
   },
 }
 

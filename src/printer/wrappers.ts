@@ -1,33 +1,35 @@
-import { AstPath, doc, ParserOptions, Printer } from 'prettier'
+import { AstPath, doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 
 const { hardline } = doc.builders
 
 // These are separated with newline
-export const separatedStatements = new Set([
+export const separatedNodes = new Set([
   'if_statement',
   'while_statement',
   'do_while_statement',
   'for_statement',
   'for_in_statement',
   'switch_statement',
+  'rule',
+  'func_def',
 ])
 
 /** Adds an empty line before and after some statements */
-export function withStatementSeparator(
+export function withNodesSeparator(
   printFn: Printer<SyntaxNode>['print'],
 ): Printer<SyntaxNode>['print'] {
   return function (path, options, print) {
     const node = path.getValue()
     const result = printFn(path, options, print)
 
-    if (separatedStatements.has(node.type)) {
+    if (separatedNodes.has(node.type)) {
       return [
         node.previousNamedSibling && node.previousNamedSibling.type !== 'comment'
           ? hardline
           : '',
         result,
-        node.nextNamedSibling && !separatedStatements.has(node.nextNamedSibling.type)
+        node.nextNamedSibling && !separatedNodes.has(node.nextNamedSibling.type)
           ? hardline
           : '',
       ]
@@ -53,9 +55,9 @@ export function withPreservedEmptyLines(
     if (nodeTypesToExclude.has(node.type)) return result
 
     if (
-      !separatedStatements.has(node.type) &&
+      !separatedNodes.has(node.type) &&
       node.previousNamedSibling &&
-      !separatedStatements.has(node.previousNamedSibling.type)
+      !separatedNodes.has(node.previousNamedSibling.type)
     ) {
       const currentLine = node.startPosition.row
       const previousLine = node.previousNamedSibling.endPosition.row

@@ -1,6 +1,6 @@
 import { doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
-import { separatedStatements } from './wrappers'
+import { separatedNodes } from './wrappers'
 
 const { hardline, indent } = doc.builders
 
@@ -20,7 +20,7 @@ export const formatBlock: Printer<SyntaxNode>['print'] = (path, _options, print)
 
   if (statementsCount === 0) return ['{}']
 
-  if (statementsCount === 1 && !separatedStatements.has(node.firstNamedChild!.type)) {
+  if (statementsCount === 1 && !separatedNodes.has(node.firstNamedChild!.type)) {
     return ['{ ', path.call(print, 'firstNamedChild'), ' }']
   }
 
