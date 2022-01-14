@@ -47,3 +47,17 @@ BEGIN{x=12}
 ```
 
 [More in official docs](https://prettier.io/docs/en/ignore.html)
+
+## Configuring
+
+Although most of the options are unsupported or make no sense in regard to AWK you can still configure tab or print width.
+
+To do so create `.prettierrc` in your project directory with following content:
+```
+{
+  "printWidth": 80,
+  "tabWidth": 4
+}
+```
+
+[More in official docs](https://prettier.io/docs/en/options.html)
