@@ -1,4 +1,4 @@
-import { Doc, doc, Printer } from 'prettier'
+import { doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 
 const { group, join, line } = doc.builders

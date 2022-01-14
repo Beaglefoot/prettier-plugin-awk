@@ -5,7 +5,7 @@ import { formatBlock } from './block'
 import { formatFunctionDefinition } from './func_def'
 import { formatIfStatement } from './if_statement'
 
-const { hardline, join, indent, group, line, breakParent } = doc.builders
+const { hardline, join, group, indent, line, softline, ifBreak } = doc.builders
 
 let nextNodeShouldBeIgnored = false
 
@@ -131,19 +131,27 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return [path.call(print, 'firstChild'), path.call(print, 'lastChild')]
 
     case 'func_call':
-      return [
+      return group([
         path.call(print, 'firstChild'),
         '(',
-        node.children[2]!.type !== ')' ? path.call(print, 'children', 2) : '',
+        indent([
+          ifBreak('\\'),
+          softline,
+          node.children[2]!.type !== ')' ? path.call(print, 'children', 2) : '',
+          ifBreak('\\'),
+        ]),
+        softline,
         ')',
-      ]
+      ])
+
+    case 'args':
+      return group(join([',', line], path.map(print, 'namedChildren')))
 
     case 'grouping':
       return node.firstNamedChild!.childCount >= 3
         ? path.map(print, 'children')
         : path.call(print, 'firstNamedChild')
 
-    case 'args':
     case 'exp_list':
     case 'range_pattern':
       return join(', ', path.map(print, 'namedChildren'))
@@ -177,7 +185,6 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return node.text
 
     case 'identifier':
-    case 'func_call':
     case 'number':
     case 'string':
     default:
