@@ -116,11 +116,17 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
 
     case 'printf_statement':
       // With parentheses because 'printf' with no arguments is invalid statement
-      return [
+      return group([
         'printf(',
-        node.firstNamedChild ? join(', ', path.map(print, 'namedChildren')) : '',
+        indent([
+          ifBreak('\\'),
+          softline,
+          join([',', line], path.map(print, 'namedChildren')),
+          ifBreak('\\'),
+        ]),
+        softline,
         ')',
-      ]
+      ])
 
     case 'unary_exp':
       return [path.call(print, 'firstChild'), path.call(print, 'lastNamedChild')]
@@ -145,6 +151,7 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       ])
 
     case 'args':
+    case 'exp_list':
       return group(join([',', line], path.map(print, 'namedChildren')))
 
     case 'grouping':
@@ -152,7 +159,6 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
         ? path.map(print, 'children')
         : path.call(print, 'firstNamedChild')
 
-    case 'exp_list':
     case 'range_pattern':
       return join(', ', path.map(print, 'namedChildren'))
 
@@ -171,6 +177,19 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return join(' ', path.map(print, 'children'))
 
     case 'array_ref':
+      return group([
+        path.call(print, 'firstNamedChild'),
+        '[',
+        indent([
+          ifBreak('\\'),
+          softline,
+          path.call(print, 'namedChildren', 1),
+          ifBreak('\\'),
+        ]),
+        softline,
+        ']',
+      ])
+
     case 'string_concat':
       return path.map(print, 'children')
 

@@ -3,4 +3,5 @@
     arr[1][2]
     arr[x,y][1]
     arr[a+b]
+    very_very_long_multidimensional_array_name[dimension_x, dimension_y, dimension_z, dimension_a, dimension_b, dimension_c]
 }
