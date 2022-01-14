@@ -1,0 +1,5 @@
+{
+    if (first_session_start != last_session_end && first_session_start >= whatever) { print }
+    
+    if (a && b) { print }
+}

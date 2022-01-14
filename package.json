@@ -13,7 +13,7 @@
   "scripts": {
     "compile": "tsc -b",
     "compile:watch": "tsc -b -w",
-    "format": "yarn compile && prettier --plugin .",
+    "format": "yarn compile && prettier --plugin . --print-width 80",
     "format:watch": "find out/ | entr -c -r yarn prettier --plugin .",
     "test": "yarn compile && mocha"
   },

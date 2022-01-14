@@ -1,8 +1,10 @@
-out
-node_modules
-.vscode-test
-temp
-temp.awk
+out/
+node_modules/
+examples/
+
 *.log
 *.tsbuildinfo
+
 .env
+temp
+temp.awk

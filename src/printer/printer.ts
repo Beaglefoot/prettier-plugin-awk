@@ -1,10 +1,11 @@
 import { Printer, doc } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
+import { formatBinaryExp } from './binary_exp'
 import { formatBlock } from './block'
 import { formatFunctionDefinition } from './func_def'
 import { formatIfStatement } from './if_statement'
 
-const { hardline, join, indent } = doc.builders
+const { hardline, join, indent, group, line, breakParent } = doc.builders
 
 let nextNodeShouldBeIgnored = false
 
@@ -147,9 +148,11 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'range_pattern':
       return join(', ', path.map(print, 'namedChildren'))
 
+    case 'binary_exp':
+      return formatBinaryExp(path, options, print)
+
     case 'redirected_io_statement':
     case 'piped_io_statement':
-    case 'binary_exp':
     case 'assignment_exp':
     case 'ternary_exp':
     case 'getline_input':

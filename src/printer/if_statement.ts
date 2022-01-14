@@ -1,7 +1,7 @@
 import { Doc, doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
 
-const { hardline, group, indent, line } = doc.builders
+const { hardline, group, indent, line, softline, ifBreak } = doc.builders
 
 export const formatIfStatement: Printer<SyntaxNode>['print'] = (
   path,
@@ -11,7 +11,19 @@ export const formatIfStatement: Printer<SyntaxNode>['print'] = (
   const node = path.getValue()
   const result: Doc[] = []
 
-  result.push('if (', path.call(print, 'firstNamedChild'), ')')
+  result.push(
+    group([
+      'if (',
+      indent([
+        ifBreak('\\'),
+        softline,
+        path.call(print, 'firstNamedChild'),
+        ifBreak('\\'),
+      ]),
+      softline,
+      ')',
+    ]),
+  )
 
   switch (node.children[4].type) {
     case ';':
