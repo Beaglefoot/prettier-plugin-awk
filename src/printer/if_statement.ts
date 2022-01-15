@@ -32,6 +32,15 @@ export const formatIfStatement: Printer<SyntaxNode>['print'] = (
     case 'block':
       result.push(' ', path.call(print, 'children', 4))
       break
+    case 'comment':
+      result.push(
+        ' ',
+        path.call(print, 'children', 4),
+        node.children[5].type === 'block'
+          ? [hardline, path.call(print, 'children', 5)]
+          : indent([hardline, path.call(print, 'children', 5)]),
+      )
+      break
     default:
       result.push(group([indent([line, path.call(print, 'children', 4)])]))
   }
