@@ -202,10 +202,10 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       ])
 
     case 'string_concat':
-      return path.map(print, 'children')
+      return group(path.map(print, 'children'))
 
     case 'concatenating_space':
-      return ' '
+      return indent([ifBreak('\\'), line])
 
     case 'comment':
       if (node.text.match(/#\s*prettier-ignore/)) {
