@@ -1,5 +1,6 @@
 import { AstPath, doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
+import { doesCommentBelongToNode } from './utils'
 
 const { hardline } = doc.builders
 
@@ -23,15 +24,21 @@ export function withNodesSeparator(
     const node = path.getValue()
     const result = printFn(path, options, print)
 
+    const shouldPrependNewline =
+      node.previousNamedSibling &&
+      (node.previousNamedSibling.type !== 'comment' ||
+        doesCommentBelongToNode(node.previousNamedSibling))
+
+    const shouldAppendNewline =
+      node.nextNamedSibling &&
+      !separatedNodes.has(node.nextNamedSibling.type) &&
+      !doesCommentBelongToNode(node.nextNamedSibling)
+
     if (separatedNodes.has(node.type)) {
       return [
-        node.previousNamedSibling && node.previousNamedSibling.type !== 'comment'
-          ? hardline
-          : '',
+        shouldPrependNewline ? hardline : '',
         result,
-        node.nextNamedSibling && !separatedNodes.has(node.nextNamedSibling.type)
-          ? hardline
-          : '',
+        shouldAppendNewline ? hardline : '',
       ]
     }
 

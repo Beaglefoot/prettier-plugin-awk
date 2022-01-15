@@ -1,17 +1,9 @@
 import { doc, Printer } from 'prettier'
 import { SyntaxNode } from 'tree-sitter'
+import { doesCommentBelongToNode } from './utils'
 import { separatedNodes } from './wrappers'
 
 const { hardline, indent, group, line } = doc.builders
-
-function doesCommentBelongToNode(node: SyntaxNode): boolean {
-  if (!node.previousNamedSibling || node.type !== 'comment') return false
-
-  return (
-    node.previousNamedSibling.startPosition.row <= node.startPosition.row &&
-    node.previousNamedSibling.endPosition.row >= node.startPosition.row
-  )
-}
 
 export const formatBlock: Printer<SyntaxNode>['print'] = (path, _options, print) => {
   const node = path.getValue()
