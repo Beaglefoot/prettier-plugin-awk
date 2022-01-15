@@ -168,13 +168,19 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'redirected_io_statement':
     case 'piped_io_statement':
     case 'assignment_exp':
-    case 'ternary_exp':
     case 'getline_input':
     case 'getline_file':
     case 'piped_io_exp':
     case 'return_statement':
     case 'exit_statement':
       return join(' ', path.map(print, 'children'))
+
+    case 'ternary_exp':
+      return group([
+        path.call(print, 'namedChildren', 0),
+        indent([line, '? ', path.call(print, 'namedChildren', 1)]),
+        indent([line, ': ', path.call(print, 'namedChildren', 2)]),
+      ])
 
     case 'array_ref':
       return group([
