@@ -1,5 +1,6 @@
 .github/
 .vscode/
+examples/
 build/
 tests/
 tests_config/
