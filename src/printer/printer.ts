@@ -183,8 +183,8 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
     case 'ternary_exp':
       return group([
         path.call(print, 'namedChildren', 0),
-        indent([line, '? ', path.call(print, 'namedChildren', 1)]),
-        indent([line, ': ', path.call(print, 'namedChildren', 2)]),
+        indent([ifBreak('\\'), line, '? ', path.call(print, 'namedChildren', 1)]),
+        indent([ifBreak('\\'), line, ': ', path.call(print, 'namedChildren', 2)]),
       ])
 
     case 'array_ref':
