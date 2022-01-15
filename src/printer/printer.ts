@@ -112,7 +112,12 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
 
     case 'print_statement':
       // No parentheses because 'print()' with no arguments is invalid statement
-      return node.firstNamedChild ? ['print ', path.map(print, 'namedChildren')] : 'print'
+      return node.firstNamedChild
+        ? group([
+            'print',
+            indent([ifBreak('\\'), line, path.map(print, 'namedChildren')]),
+          ])
+        : 'print'
 
     case 'printf_statement':
       // With parentheses because 'printf' with no arguments is invalid statement
