@@ -15,7 +15,7 @@ export const formatBlock: Printer<SyntaxNode>['print'] = (path, _options, print)
   if (
     statementsCount === 1 &&
     !separatedNodes.has(node.firstNamedChild!.type) &&
-    node.firstNamedChild!.type !== 'comment'
+    node.descendantsOfType('comment').length === 0
   ) {
     return group(['{', indent([line, path.call(print, 'firstNamedChild')]), line, '}'])
   }
