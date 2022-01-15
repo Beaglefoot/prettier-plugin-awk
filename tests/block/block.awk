@@ -16,3 +16,7 @@ a = 1
     # continued on newline
     for (1;1;1) {}
 }
+
+{
+    # comment
+}

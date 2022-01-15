@@ -20,7 +20,11 @@ export const formatBlock: Printer<SyntaxNode>['print'] = (path, _options, print)
 
   if (statementsCount === 0) return ['{}']
 
-  if (statementsCount === 1 && !separatedNodes.has(node.firstNamedChild!.type)) {
+  if (
+    statementsCount === 1 &&
+    !separatedNodes.has(node.firstNamedChild!.type) &&
+    node.firstNamedChild!.type !== 'comment'
+  ) {
     return group(['{', indent([line, path.call(print, 'firstNamedChild')]), line, '}'])
   }
 
