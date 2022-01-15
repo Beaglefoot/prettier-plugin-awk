@@ -181,6 +181,9 @@ export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => 
       return join(' ', path.map(print, 'children'))
 
     case 'ternary_exp':
+      // Just leave as it is, no idea how to handle this properly
+      if (node.descendantsOfType('comment').length) return node.text
+
       return group([
         path.call(print, 'namedChildren', 0),
         indent([ifBreak('\\'), line, '? ', path.call(print, 'namedChildren', 1)]),
