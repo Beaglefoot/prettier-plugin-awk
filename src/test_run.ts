@@ -2,13 +2,22 @@
 import * as prettier from 'prettier'
 import * as plugin from '.'
 import { readFileSync } from 'fs'
+import { stdout } from 'process'
+import { basename } from 'path'
 
-const AWK_SOURCE_PATH = process.env.AWK_SOURCE_PATH
+function usage(): void {
+  stdout.write('\nUsage:\n\n')
+  stdout.write(`    node ${basename(__filename)} FILEPATH.awk\n\n`)
+}
 
-if (!AWK_SOURCE_PATH)
-  throw new Error('Initialize AWK_SOURCE_PATH env variable and try again')
+if (process.argv.length !== 3) {
+  usage()
+  process.exit(2)
+}
 
-const text = readFileSync(AWK_SOURCE_PATH, 'utf8')
+const filepath = process.argv[2]
+
+const text = readFileSync(filepath, 'utf8')
 
 const result = prettier.format(text, {
   plugins: [plugin],
