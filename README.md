@@ -3,7 +3,7 @@
 [![tests](https://github.com/Beaglefoot/prettier-plugin-awk/actions/workflows/tests.yml/badge.svg)](https://github.com/Beaglefoot/prettier-plugin-awk/actions/workflows/tests.yml)
 [![npm](https://img.shields.io/npm/v/prettier-plugin-awk)](https://www.npmjs.com/package/prettier-plugin-awk)
 
-An opionated formatter for AWK language built as a plugin for [Prettier](https://github.com/prettier/prettier) with help of [tree-sitter](https://github.com/tree-sitter/tree-sitter) and [tree-sitter-awk](https://github.com/Beaglefoot/tree-sitter-awk).
+An opinionated formatter for AWK language built as a plugin for [Prettier](https://github.com/prettier/prettier) with help of [tree-sitter](https://github.com/tree-sitter/tree-sitter) and [tree-sitter-awk](https://github.com/Beaglefoot/tree-sitter-awk).
 
 
 ## How to install and use
