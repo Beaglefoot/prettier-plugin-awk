@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "prettier": "2.5.1",
-    "tree-sitter": "0.20.0",
-    "tree-sitter-awk": "0.4.1"
+    "tree-sitter": "0.20.1",
+    "tree-sitter-awk": "0.5.1"
   },
   "devDependencies": {
     "@types/node": "17.0.0",
