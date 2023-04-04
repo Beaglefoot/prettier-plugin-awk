@@ -840,10 +840,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-tree-sitter-awk.abi13@0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/tree-sitter-awk.abi13/-/tree-sitter-awk.abi13-0.5.3.tgz#8d549fe80a47b335bf0f719eb9bbf21b13e561a0"
-  integrity sha512-wFb17zLe0bxiBuKSEZ6k9YWwMfItcDdOHNHvOJm2rfRauO0IQ0Toa1gno2BWCzA1eNwET/DsQAIuM0gHqacr5w==
+tree-sitter-awk.abi13@0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/tree-sitter-awk.abi13/-/tree-sitter-awk.abi13-0.5.4.tgz#e94723c96030490d8d5bd618634e6f8c8a49c983"
+  integrity sha512-XICwSgTDDrdIS4sEtChR+mX0JUyv1r03zqiCvdnknWccLgW/htGLLnUGFHYtQ1wKfgHORxioYJq1Li0MaAA5Kg==
   dependencies:
     nan "2.17.0"
 
