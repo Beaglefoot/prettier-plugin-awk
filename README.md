@@ -27,7 +27,7 @@ npm init -y
 
 Then add development dependencies:
 ```
-npm add --save-dev prettier prettier-plugin-awk
+npm add --save-dev prettier@^2 prettier-plugin-awk
 ```
 
 Then run with:
