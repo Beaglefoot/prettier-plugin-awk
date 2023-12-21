@@ -10,7 +10,7 @@ An opinionated formatter for AWK language built as a plugin for [Prettier](https
 
 ### Globally
 ```
-npm install --global prettier prettier-plugin-awk
+npm install --global prettier@^2 prettier-plugin-awk
 ```
 
 Then run:
