@@ -12,7 +12,7 @@ let nextNodeShouldBeIgnored = false
 export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
   const node = path.getValue()
 
-  if (node.hasError()) {
+  if (node.hasError) {
     throw new Error('Document has syntax error')
   }
 
