@@ -1,6 +1,6 @@
-import { SyntaxNode } from 'tree-sitter'
+import { Node as TSNode } from 'web-tree-sitter'
 
-export function doesCommentBelongToNode(node: SyntaxNode): boolean {
+export function doesCommentBelongToNode(node: TSNode): boolean {
   if (!node.previousNamedSibling || node.type !== 'comment') return false
 
   return (

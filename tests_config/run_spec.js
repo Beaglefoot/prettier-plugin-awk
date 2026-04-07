@@ -19,7 +19,7 @@ function run_spec(dirname, options) {
         )
       })
       .forEach((filename) => {
-        it(filename, () => {
+        it(filename, async () => {
           const filepath = dirname + '/' + filename
 
           let rangeStart = 0
@@ -49,7 +49,7 @@ function run_spec(dirname, options) {
             cursorOffset,
           })
 
-          const output = prettyprint(input, mergedOptions)
+          const output = await prettyprint(input, mergedOptions)
           const snapshot = getSnapshot(dirname, filename)
           const actual = assembleSnapshotFormat(source, output, mergedOptions.printWidth)
 
@@ -66,8 +66,8 @@ function run_spec(dirname, options) {
 
 global.run_spec = run_spec
 
-function prettyprint(src, options) {
-  const result = prettier.formatWithCursor(src, options)
+async function prettyprint(src, options) {
+  const result = await prettier.formatWithCursor(src, options)
 
   if (options.cursorOffset >= 0) {
     result.formatted =
@@ -86,7 +86,9 @@ function read(filename) {
 function mergeDefaultOptions(parserConfig) {
   return Object.assign(
     {
-      plugins: [path.dirname(__dirname)],
+      // Use explicit path to compiled output — prettier 3.x uses ESM dynamic
+      // import() which does not support directory imports (only explicit files)
+      plugins: [require.resolve('../out/index.js')],
       printWidth: 80,
     },
     parserConfig,

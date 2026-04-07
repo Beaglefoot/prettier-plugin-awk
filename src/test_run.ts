@@ -19,9 +19,15 @@ const filepath = process.argv[2]
 
 const text = readFileSync(filepath, 'utf8')
 
-const result = prettier.format(text, {
-  plugins: [plugin],
-  parser: 'awk-parse',
-})
+async function main() {
+  const result = await prettier.format(text, {
+    plugins: [plugin],
+    parser: 'awk-parse',
+  })
+  console.log(result)
+}
 
-console.log(result)
+main().catch((err) => {
+  console.error(err)
+  process.exit(1)
+})

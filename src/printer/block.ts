@@ -1,14 +1,14 @@
 import { doc, Printer } from 'prettier'
-import { SyntaxNode } from 'tree-sitter'
+import { Node as TSNode } from 'web-tree-sitter'
 import { doesCommentBelongToNode } from './utils'
 import { separatedNodes } from './wrappers'
 
 const { hardline, indent, group, line } = doc.builders
 
-export const formatBlock: Printer<SyntaxNode>['print'] = (path, _options, print) => {
-  const node = path.getValue()
+export const formatBlock: Printer<any>['print'] = (path, _options, print) => {
+  const node = path.node as TSNode
 
-  const statementsCount = node.children.filter((node) => node.isNamed).length
+  const statementsCount = node.children.filter((n: TSNode) => n.isNamed).length
 
   if (statementsCount === 0) return ['{}']
 
@@ -23,7 +23,7 @@ export const formatBlock: Printer<SyntaxNode>['print'] = (path, _options, print)
   return [
     '{',
     indent(
-      node.namedChildren.flatMap((n, i) => {
+      node.namedChildren.flatMap((n: TSNode, i: number) => {
         if (doesCommentBelongToNode(n)) return [' ', n.text]
         return [hardline, path.call(print, 'namedChildren', i)]
       }),

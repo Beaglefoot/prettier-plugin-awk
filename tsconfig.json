@@ -3,7 +3,8 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "strict": true,
-    "target": "es6",
+    "skipLibCheck": true,
+    "target": "es2020",
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
@@ -19,5 +20,5 @@
   "exclude": [
     "node_modules",
     "out"
-  ],
+  ]
 }

@@ -1,6 +1,6 @@
-import { SupportLanguage, Parser, Printer, Options } from 'prettier'
-import { SyntaxNode } from 'tree-sitter'
-import { parser } from './parser'
+import { SupportLanguage, Parser as PrettierParser, Printer, Options } from 'prettier'
+import { Node as TSNode } from 'web-tree-sitter'
+import { initParser } from './parser'
 import { printAwk } from './printer/printer'
 import {
   withNullNodeHandler,
@@ -19,16 +19,21 @@ export const languages: SupportLanguage[] = [
   },
 ]
 
-export const parsers: Record<ParserName, Parser> = {
+export const parsers: Record<ParserName, PrettierParser> = {
   'awk-parse': {
-    parse: (text: string): SyntaxNode => parser.parse(text).rootNode,
+    parse: async (text: string): Promise<TSNode> => {
+      const parser = await initParser()
+      const tree = parser.parse(text)
+      if (!tree) throw new Error('Failed to parse AWK document')
+      return tree.rootNode
+    },
     astFormat: 'awk-format',
     locStart: () => -1,
     locEnd: () => -1,
   },
 }
 
-export const printers: Record<PrinterName, Printer> = {
+export const printers: Record<PrinterName, Printer<TSNode | null>> = {
   'awk-format': {
     print: withNullNodeHandler(withPreservedEmptyLines(withNodesSeparator(printAwk))),
   },

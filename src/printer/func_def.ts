@@ -1,5 +1,5 @@
 import { doc, Printer } from 'prettier'
-import { SyntaxNode } from 'tree-sitter'
+import { Node as TSNode } from 'web-tree-sitter'
 
 const { hardline, join, indent } = doc.builders
 
@@ -23,7 +23,7 @@ function parseParams(paramsText: string): FunctionParams {
   return result
 }
 
-function formatParamsHorizontally(paramList: SyntaxNode): doc.builders.Doc[] {
+function formatParamsHorizontally(paramList: TSNode): doc.builders.Doc[] {
   const initialParamsText = paramList?.text || ''
   const allParams = parseParams(initialParamsText)
 
@@ -36,14 +36,14 @@ function formatParamsHorizontally(paramList: SyntaxNode): doc.builders.Doc[] {
   ]
 }
 
-function formatParamsVertically(paramList: SyntaxNode): doc.builders.Doc[] {
+function formatParamsVertically(paramList: TSNode): doc.builders.Doc[] {
   return [
     '(\\',
     indent([
       hardline,
       join(
         [',', hardline],
-        paramList.namedChildren.map((c) => c.text),
+        paramList.namedChildren.map((c: TSNode) => c.text),
       ),
       '\\',
     ]),
@@ -52,12 +52,12 @@ function formatParamsVertically(paramList: SyntaxNode): doc.builders.Doc[] {
   ]
 }
 
-export const formatFunctionDefinition: Printer<SyntaxNode>['print'] = (
+export const formatFunctionDefinition: Printer<any>['print'] = (
   path,
   _options,
   print,
 ) => {
-  const node = path.getValue()
+  const node = path.node as TSNode
   const paramList = node.descendantsOfType('param_list')[0]
 
   const formattedParams = paramList?.text.includes('\n')
