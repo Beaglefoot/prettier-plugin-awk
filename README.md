@@ -9,13 +9,26 @@ An opinionated formatter for AWK language built as a plugin for [Prettier](https
 ## How to install and use
 
 ### Globally
+
+In Prettier 3, plugins are no longer automatically found if they are installed globally. So although this method works the convenience is gone.
+
 ```
 npm install --global prettier prettier-plugin-awk
 ```
 
 Then run:
 ```
-prettier --write /path/to/your/awesome_script.awk
+prettier --plugin=$(npm root -g)/prettier-plugin-awk/out/index.js --write /path/to/your/awesome_script.awk
+```
+
+Alternatively you might create config file named `.prettierrc` in current dir and skip `--plugin` option.
+
+```json
+{
+    "plugins": [
+        "/home/awk-developer/npm/lib/node_modules/prettier-plugin-awk/out/index.js"
+    ]
+}
 ```
 
 ### Per project
@@ -32,7 +45,16 @@ npm add --save-dev prettier prettier-plugin-awk
 
 Then run with:
 ```
-npx prettier --write ./awesome_script.awk
+npx prettier --plugin=prettier-plugin-awk --write ./awesome_script.awk
+```
+
+Or you can add `.prettierrc` config file and skip `--plugin` option:
+```json
+{
+    "plugins": [
+        "prettier-plugin-awk"
+    ]
+}
 ```
 
 You can then create pre-commit hook with something like [husky](https://github.com/typicode/husky) or incorporate such check as CI step.
