@@ -1,5 +1,5 @@
 import { AstPath, doc, Printer } from 'prettier'
-import { SyntaxNode } from 'tree-sitter'
+import { Node as TSNode } from 'web-tree-sitter'
 import { doesCommentBelongToNode } from './utils'
 
 const { hardline } = doc.builders
@@ -18,10 +18,10 @@ export const separatedNodes = new Set([
 
 /** Adds an empty line before and after some statements */
 export function withNodesSeparator(
-  printFn: Printer<SyntaxNode>['print'],
-): Printer<SyntaxNode>['print'] {
+  printFn: Printer<TSNode | null>['print'],
+): Printer<TSNode | null>['print'] {
   return function (path, options, print) {
-    const node = path.getValue()
+    const node = path.node as TSNode
     const result = printFn(path, options, print)
 
     const shouldPrependNewline =
@@ -51,12 +51,12 @@ export function withNodesSeparator(
  * Multiple empty lines get replaced with a single one.
  */
 export function withPreservedEmptyLines(
-  printFn: Printer<SyntaxNode>['print'],
-): Printer<SyntaxNode>['print'] {
+  printFn: Printer<TSNode | null>['print'],
+): Printer<TSNode | null>['print'] {
   const nodeTypesToExclude = new Set(['rule', 'block', 'func_def'])
 
   return function (path, options, print) {
-    const node = path.getValue()
+    const node = path.node as TSNode
     const result = printFn(path, options, print)
 
     if (nodeTypesToExclude.has(node.type)) return result
@@ -80,14 +80,14 @@ export function withPreservedEmptyLines(
 
 /** This printer wrapper must be the outer one */
 export function withNullNodeHandler(
-  printFn: Printer<SyntaxNode>['print'],
-): Printer<SyntaxNode | null>['print'] {
+  printFn: Printer<TSNode | null>['print'],
+): Printer<TSNode | null>['print'] {
   return function (path, options, print) {
-    const node = path.getValue()
+    const node = path.node
 
     if (node === null) return ''
 
-    const result = printFn(path as AstPath<SyntaxNode>, options, print)
+    const result = printFn(path as AstPath<any>, options, print)
     return result
   }
 }

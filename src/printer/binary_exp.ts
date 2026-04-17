@@ -1,12 +1,12 @@
 import { doc, Printer } from 'prettier'
-import { SyntaxNode } from 'tree-sitter'
+import { Node as TSNode } from 'web-tree-sitter'
 
 const { group, join, line } = doc.builders
 
 const allowedToSplit = new Set(['&&', '||'])
 
-export const formatBinaryExp: Printer<SyntaxNode>['print'] = (path, _options, print) => {
-  const node = path.getValue()
+export const formatBinaryExp: Printer<TSNode | null>['print'] = (path, _options, print) => {
+  const node = path.node as TSNode
 
   if (!allowedToSplit.has(node.children[1].text))
     return join(' ', path.map(print, 'children'))

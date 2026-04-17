@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-awk",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "author": "Stanislav Chernov <ch-e-st@yandex.ru>",
   "license": "MIT",
   "keywords": [
@@ -13,19 +13,16 @@
   "scripts": {
     "compile": "tsc -b",
     "compile:watch": "tsc -b -w",
-    "format": "yarn compile && prettier --plugin . --print-width 80",
-    "format:watch": "find out/ | entr -c -r yarn prettier --plugin .",
-    "test": "yarn compile && mocha"
+    "test": "npm run compile && mocha"
   },
   "dependencies": {
-    "prettier": "2.5.1",
-    "tree-sitter": "0.21.1",
-    "tree-sitter-awk": "0.7.2"
+    "prettier": "3.8.1",
+    "tree-sitter-awk": "0.7.2",
+    "web-tree-sitter": "0.26.8"
   },
   "devDependencies": {
-    "@types/node": "17.0.0",
-    "@types/prettier": "2.4.2",
-    "mocha": "9.2.0",
-    "typescript": "4.5.4"
+    "@types/node": "22.0.0",
+    "mocha": "10.7.3",
+    "typescript": "5.6.3"
   }
 }

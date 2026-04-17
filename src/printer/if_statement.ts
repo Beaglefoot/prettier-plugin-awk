@@ -1,14 +1,14 @@
 import { Doc, doc, Printer } from 'prettier'
-import { SyntaxNode } from 'tree-sitter'
+import { Node as TSNode } from 'web-tree-sitter'
 
 const { hardline, group, indent, line, softline, ifBreak } = doc.builders
 
-export const formatIfStatement: Printer<SyntaxNode>['print'] = (
+export const formatIfStatement: Printer<any>['print'] = (
   path,
   _options,
   print,
 ) => {
-  const node = path.getValue()
+  const node = path.node as TSNode
   const result: Doc[] = []
 
   result.push(

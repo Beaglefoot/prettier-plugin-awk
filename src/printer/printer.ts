@@ -1,5 +1,5 @@
 import { Printer, doc } from 'prettier'
-import { SyntaxNode } from 'tree-sitter'
+import { Node as TSNode } from 'web-tree-sitter'
 import { formatBinaryExp } from './binary_exp'
 import { formatBlock } from './block'
 import { formatFunctionDefinition } from './func_def'
@@ -9,8 +9,8 @@ const { hardline, join, group, indent, line, softline, ifBreak } = doc.builders
 
 let nextNodeShouldBeIgnored = false
 
-export const printAwk: Printer<SyntaxNode>['print'] = (path, options, print) => {
-  const node = path.getValue()
+export const printAwk: Printer<any>['print'] = (path, options, print) => {
+  const node = path.node as TSNode
 
   if (node.hasError) {
     throw new Error('Document has syntax error')
