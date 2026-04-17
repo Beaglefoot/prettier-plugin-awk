@@ -29,15 +29,21 @@ to the original plugin.
 - `src/index.ts` — `parse()` is now async (prettier 3.x supports Promise return);
   updated imports from `tree-sitter` → `web-tree-sitter`
 - `src/printer/printer.ts` — `path.getValue()` → `path.node as TSNode`;
-  `Printer<any>['print']` type (prettier 3.x generic variance); updated import
-- `src/printer/wrappers.ts` — same printer type and node access changes (×3);
+  `Printer<any>['print']` type retained because this file uses
+  `path.call(print, 'children', N)` / `path.call(print, 'namedChildren', N)`
+  patterns which fail to type-check under a stricter generic parameter;
   updated import
-- `src/printer/binary_exp.ts` — same changes; updated import
-- `src/printer/block.ts` — same changes; updated import; explicit `TSNode` types
+- `src/printer/wrappers.ts` — `Printer<TSNode | null>['print']` (×3);
+  updated import
+- `src/printer/binary_exp.ts` — `Printer<TSNode | null>['print']`;
+  updated import
+- `src/printer/block.ts` — `Printer<any>['print']` retained (uses
+  named-child indexing); updated import; explicit `TSNode` types
   on lambda params
-- `src/printer/func_def.ts` — same changes; updated import; explicit `TSNode`
-  type on map callback
-- `src/printer/if_statement.ts` — same changes; updated import
+- `src/printer/func_def.ts` — `Printer<TSNode | null>['print']`;
+  updated import; explicit `TSNode` type on map callback
+- `src/printer/if_statement.ts` — `Printer<any>['print']` retained
+  (uses numbered-child indexing); updated import
 - `src/printer/utils.ts` — updated import from `tree-sitter` → `web-tree-sitter`
 - `src/test_run.ts` — `prettier.format()` now awaited (prettier 3.x async)
 - `tests_config/run_spec.js` — test callbacks and `prettyprint()` now async/await;

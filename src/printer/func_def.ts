@@ -52,7 +52,7 @@ function formatParamsVertically(paramList: TSNode): doc.builders.Doc[] {
   ]
 }
 
-export const formatFunctionDefinition: Printer<any>['print'] = (
+export const formatFunctionDefinition: Printer<TSNode | null>['print'] = (
   path,
   _options,
   print,

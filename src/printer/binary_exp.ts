@@ -5,7 +5,7 @@ const { group, join, line } = doc.builders
 
 const allowedToSplit = new Set(['&&', '||'])
 
-export const formatBinaryExp: Printer<any>['print'] = (path, _options, print) => {
+export const formatBinaryExp: Printer<TSNode | null>['print'] = (path, _options, print) => {
   const node = path.node as TSNode
 
   if (!allowedToSplit.has(node.children[1].text))

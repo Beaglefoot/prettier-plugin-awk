@@ -18,8 +18,8 @@ export const separatedNodes = new Set([
 
 /** Adds an empty line before and after some statements */
 export function withNodesSeparator(
-  printFn: Printer<any>['print'],
-): Printer<any>['print'] {
+  printFn: Printer<TSNode | null>['print'],
+): Printer<TSNode | null>['print'] {
   return function (path, options, print) {
     const node = path.node as TSNode
     const result = printFn(path, options, print)
@@ -51,8 +51,8 @@ export function withNodesSeparator(
  * Multiple empty lines get replaced with a single one.
  */
 export function withPreservedEmptyLines(
-  printFn: Printer<any>['print'],
-): Printer<any>['print'] {
+  printFn: Printer<TSNode | null>['print'],
+): Printer<TSNode | null>['print'] {
   const nodeTypesToExclude = new Set(['rule', 'block', 'func_def'])
 
   return function (path, options, print) {
@@ -80,7 +80,7 @@ export function withPreservedEmptyLines(
 
 /** This printer wrapper must be the outer one */
 export function withNullNodeHandler(
-  printFn: Printer<any>['print'],
+  printFn: Printer<TSNode | null>['print'],
 ): Printer<TSNode | null>['print'] {
   return function (path, options, print) {
     const node = path.node
